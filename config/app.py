@@ -12,9 +12,14 @@ from config.db import db
 #
 def register_blueprints(app):
      from views.UserView import userView
+     from views.ClassificationView import classview
+     from views.ContentImgView import imgview
 
 #     # 注册使用蓝图
      app.register_blueprint(userView, url_prefix="/user")
+     app.register_blueprint(classview, url_prefix='/class')
+     app.register_blueprint(imgview, url_prefix='/img')
+
 
 
 # 获取app(避免上下文)

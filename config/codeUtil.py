@@ -16,3 +16,30 @@ def model_to_dict(result):
     except BaseException as e:
         print(e.args)
         raise TypeError('Type error of parameter')
+
+
+# 统一返回标准
+def success(data=[], message='请求成功', code=200):
+    return {
+        'message': message,
+        'code': code,
+        'data': data
+    }
+
+
+# 统一返回标准
+def error(data=[], message='请求错误', code=500):
+    return {
+        'message': message,
+        'code': code,
+        'data': data
+    }
+
+
+# 统一返回标准
+def fail(data=[], message='请求失败', code=-1):
+    return {
+        'message': message,
+        'code': code,
+        'data': data
+    }

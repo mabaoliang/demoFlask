@@ -9,6 +9,8 @@ from config.app import create_app
 # 需要导入那些模型就加那些模型
 from config.db import db
 from models.User import User
+from models.Classification import Classification
+from models.ContentImg import ContentImg
 
 
 app = create_app()
