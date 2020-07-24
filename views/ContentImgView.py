@@ -4,6 +4,7 @@ import os, random, string, jsonify
 from config.db import db
 from models.Classification import Classification
 from models.ContentImg import ContentImg
+from models.Classification import Classification
 from config.codeUtil import model_to_dict, success, fail
 import os
 import time
@@ -16,7 +17,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))  # 定义一个根目录 �
 
 imgview = Blueprint('img', __name__, static_folder='static', static_url_path='/static/file')
 
-
+# 新增
 @imgview.route('/add', methods=['GET', "POST"])
 def add():
     t = request.values.get('contentTitle')
@@ -32,7 +33,7 @@ def add():
     db.session.commit()
     return success()
 
-
+# 查询
 @imgview.route('/select', methods=['GET', "POST"])
 def select():
     total = ContentImg.query.count()
@@ -50,6 +51,7 @@ def select():
         arr = ContentImg.query.paginate(page=int(page), per_page=int(limit), error_out=False)
         return {"data":model_to_dict(arr.items),"code":1,"total":total,"message":"请求成功"}
 
+# 删除
 @imgview.route('/delete', methods=['GET', "POST"])
 def delete():
     if request.values.get('contentId'):
@@ -66,6 +68,22 @@ def delete():
 
         return fail()
 
+
+# 更新下载量 浏览量
+@imgview.route('/update',methods=["POST"])
+def update():
+      cid = request.values.get('contentId')
+      obj = ContentImg.query.filter(ContentImg.contentId == cid).first()
+      if request.values.get('contentBrowse'):  # 浏览量
+          obj.contentBrowse= request.values.get('contentBrowse')
+
+
+      if request.values.get('contentDownload'):  # 下载量
+           obj.contentDownload = request.values.get('contentDownload')
+
+      db.session.commit()
+
+      return  success()
 
 
 # 下载

@@ -21,4 +21,5 @@ class ContentImg(db.Model):
 
     # 外键
     forgetId = db.Column(db.BigInteger, db.ForeignKey('py_class.classId'))
-
+    #
+    # order = db.relationship('py_order', backref='content')
